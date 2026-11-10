@@ -1,0 +1,15 @@
+{
+  "dashboard": "داشبورد",
+  "weighbridge": "باسکول",
+  "inventory": "مدیریت انبار",
+  "materials": "بانک مواد",
+  "purchases": "خریدها",
+  "sales": "فروش‌ها",
+  "processing": "فرآوری",
+  "contacts": "اشخاص و طرف حساب",
+  "finance": "امور مالی",
+  "fleet": "حمل‌ونقل",
+  "reports": "گزارش‌ها",
+  "team": "کاربران و دسترسی",
+  "settings": "تنظیمات"
+}

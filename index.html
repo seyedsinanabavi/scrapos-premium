@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="ScrapOS — Premium Recycling & Scrap Management System">
+  <title>ScrapOS — مدیریت هوشمند ضایعات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark"><span class="brand-symbol">↻</span></div>
+        <div class="brand-copy"><strong>SCRAP<span>OS</span></strong><small>RECYCLING INTELLIGENCE</small></div>
+        <button class="icon-btn sidebar-close" id="sidebarClose" aria-label="بستن منو">×</button>
+      </div>
+      <div class="workspace-switch">
+        <div class="workspace-avatar">S</div>
+        <div class="workspace-copy"><strong data-i18n="workspace">مجموعه بازیافت سبز</strong><small data-i18n="workspaceType">فضای کاری اصلی</small></div>
+        <span class="chevron">⌄</span>
+      </div>
+      <nav class="nav-menu" id="navMenu">
+        <div class="nav-label" data-i18n="overview">نمای کلی</div>
+        <a class="nav-link active" href="#dashboard" data-page="dashboard"><span class="nav-icon">▦</span><span data-i18n="dashboard">داشبورد</span><kbd>⌘ 1</kbd></a>
+        <div class="nav-label" data-i18n="operations">عملیات</div>
+        <a class="nav-link" href="#weighbridge" data-page="weighbridge"><span class="nav-icon">▤</span><span data-i18n="weighbridge">باسکول</span><i class="nav-dot"></i></a>
+        <a class="nav-link" href="#inventory" data-page="inventory"><span class="nav-icon">▧</span><span data-i18n="inventory">مدیریت انبار</span></a>
+        <a class="nav-link" href="#materials" data-page="materials"><span class="nav-icon">◈</span><span data-i18n="materials">بانک مواد</span></a>
+        <a class="nav-link" href="#purchases" data-page="purchases"><span class="nav-icon">↙</span><span data-i18n="purchases">خریدها</span></a>
+        <a class="nav-link" href="#sales" data-page="sales"><span class="nav-icon">↗</span><span data-i18n="sales">فروش‌ها</span></a>
+        <a class="nav-link" href="#processing" data-page="processing"><span class="nav-icon">⚙</span><span data-i18n="processing">فرآوری</span></a>
+        <div class="nav-label" data-i18n="relations">ارتباطات و مالی</div>
+        <a class="nav-link" href="#contacts" data-page="contacts"><span class="nav-icon">♙</span><span data-i18n="contacts">اشخاص و طرف حساب</span></a>
+        <a class="nav-link" href="#finance" data-page="finance"><span class="nav-icon">◫</span><span data-i18n="finance">امور مالی</span></a>
+        <a class="nav-link" href="#fleet" data-page="fleet"><span class="nav-icon">▰</span><span data-i18n="fleet">حمل‌ونقل</span></a>
+        <div class="nav-label" data-i18n="insights">تحلیل و مدیریت</div>
+        <a class="nav-link" href="#reports" data-page="reports"><span class="nav-icon">⌁</span><span data-i18n="reports">گزارش‌ها</span></a>
+        <a class="nav-link" href="#team" data-page="team"><span class="nav-icon">♧</span><span data-i18n="team">کاربران و دسترسی</span></a>
+        <a class="nav-link" href="#settings" data-page="settings"><span class="nav-icon">⚙</span><span data-i18n="settings">تنظیمات</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="upgrade-card">
+          <div class="upgrade-icon">✦</div>
+          <strong data-i18n="upgradeTitle">قدرت بیشتر با تحلیل هوشمند</strong>
+          <p data-i18n="upgradeDesc">عملکرد مجموعه‌تان را در یک نگاه بررسی کنید.</p>
+          <button class="upgrade-link" data-action="toast" data-message="این قابلیت در نسخه تجاری فعال می‌شود." data-i18n="learnMore">بیشتر بدانید <span>←</span></button>
+        </div>
+        <div class="sidebar-user">
+          <div class="avatar avatar-green">م</div>
+          <div class="user-copy"><strong data-i18n="userName">محمد رضایی</strong><small data-i18n="userRole">مدیر مجموعه</small></div>
+          <button class="more-btn" data-action="toast" data-message="منوی حساب کاربری">•••</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="topbar-start">
+          <button class="icon-btn mobile-menu" id="mobileMenu" aria-label="منو">☰</button>
+          <div class="breadcrumb"><span data-i18n="workspace">مجموعه بازیافت سبز</span><span class="crumb-sep">/</span><strong id="pageCrumb">داشبورد</strong></div>
+        </div>
+        <div class="topbar-actions">
+          <label class="global-search"><span>⌕</span><input id="globalSearch" type="search" placeholder="جستجو در ScrapOS..." data-i18n-placeholder="searchPlaceholder"><kbd>⌘ K</kbd></label>
+          <button class="icon-btn top-icon" id="languageToggle" title="تغییر زبان">文</button>
+          <button class="icon-btn top-icon" id="themeToggle" title="تغییر پوسته">◐</button>
+          <button class="icon-btn top-icon notification-btn" data-action="toast" data-message="اعلان جدیدی ندارید." title="اعلان‌ها">♧<i></i></button>
+          <div class="top-divider"></div>
+          <div class="top-user"><div class="avatar avatar-green">م</div><div><strong data-i18n="userName">محمد رضایی</strong><small data-i18n="userRole">مدیر مجموعه</small></div><span class="chevron">⌄</span></div>
+        </div>
+      </header>
+
+      <section class="page-content" id="pageContent">
+        <div class="page-heading">
+          <div><div class="eyebrow"><span class="live-dot"></span><span data-i18n="overviewEyebrow">نمای کلی کسب‌وکار</span></div><h1 data-i18n="dashboard">داشبورد</h1><p data-i18n="dashboardSub">سلام محمد، امروز وضعیت مجموعه شما چطور است؟</p></div>
+          <div class="heading-actions"><button class="btn btn-quiet" data-action="date-range">▦ <span data-i18n="last30">۳۰ روز گذشته</span> <span>⌄</span></button><button class="btn btn-primary" data-action="new-transaction"><span>＋</span><span data-i18n="newTransaction">ثبت معامله جدید</span></button></div>
+        </div>
+
+        <div class="notice-bar"><span class="notice-icon">✦</span><div><strong data-i18n="demoNoticeTitle">محیط پیش‌نمایش تعاملی</strong><span data-i18n="demoNotice">اطلاعات این نسخه نمونه هستند؛ تغییرات در مرورگر شما ذخیره می‌شوند.</span></div><button class="notice-close" id="noticeClose">×</button></div>
+
+        <div class="metric-grid" id="metricGrid">
+          <article class="metric-card"><div class="metric-top"><span data-i18n="totalRevenue">فروش کل</span><span class="metric-icon icon-emerald">↗</span></div><div class="metric-value" id="revenueValue">۲,۴۸۶,۰۰۰,۰۰۰ <small>تومان</small></div><div class="metric-foot"><span class="trend positive">↑ ۱۲.۸٪</span><span data-i18n="vsLastMonth">نسبت به ماه قبل</span><div class="sparkline spark-1"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></article>
+          <article class="metric-card"><div class="metric-top"><span data-i18n="grossProfit">سود ناخالص</span><span class="metric-icon icon-blue">◈</span></div><div class="metric-value">۴۲۸,۵۰۰,۰۰۰ <small>تومان</small></div><div class="metric-foot"><span class="trend positive">↑ ۸.۴٪</span><span data-i18n="vsLastMonth">نسبت به ماه قبل</span><div class="sparkline spark-2"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></article>
+          <article class="metric-card"><div class="metric-top"><span data-i18n="totalWeight">تناژ جابه‌جا شده</span><span class="metric-icon icon-violet">▤</span></div><div class="metric-value">۳۸۶.۴ <small>تن</small></div><div class="metric-foot"><span class="trend positive">↑ ۶.۲٪</span><span data-i18n="vsLastMonth">نسبت به ماه قبل</span><div class="sparkline spark-3"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></article>
+          <article class="metric-card"><div class="metric-top"><span data-i18n="inventoryValue">ارزش موجودی</span><span class="metric-icon icon-amber">▧</span></div><div class="metric-value">۱,۲۶۰,۰۰۰,۰۰۰ <small>تومان</small></div><div class="metric-foot"><span class="trend negative">↓ ۲.۱٪</span><span data-i18n="vsLastMonth">نسبت به ماه قبل</span><div class="sparkline spark-4"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></article>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="panel revenue-panel">
+            <div class="panel-heading"><div><h2 data-i18n="revenueOverview">روند درآمد و خرید</h2><p data-i18n="revenueOverviewSub">مقایسه فروش و خرید در بازه انتخابی</p></div><div class="legend"><span><i class="legend-dot sales-dot"></i><span data-i18n="sales">فروش</span></span><span><i class="legend-dot purchase-dot"></i><span data-i18n="purchases">خرید</span></span></div></div>
+            <div class="chart-wrap"><div class="chart-y"><span>۳۰۰M</span><span>۲۰۰M</span><span>۱۰۰M</span><span>۰</span></div><div class="chart-main"><div class="chart-gridlines"><i></i><i></i><i></i><i></i></div><svg class="revenue-chart" viewBox="0 0 700 220" preserveAspectRatio="none" aria-label="نمودار درآمد"><defs><linearGradient id="salesFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#10b981" stop-opacity=".22"/><stop offset="1" stop-color="#10b981" stop-opacity="0"/></linearGradient></defs><path d="M0 165 C45 150 55 130 100 145 S165 95 200 118 S265 80 300 104 S365 45 400 75 S465 92 500 61 S565 40 600 55 S665 18 700 28 L700 220 L0 220Z" fill="url(#salesFill)"/><path d="M0 165 C45 150 55 130 100 145 S165 95 200 118 S265 80 300 104 S365 45 400 75 S465 92 500 61 S565 40 600 55 S665 18 700 28" fill="none" stroke="#10b981" stroke-width="3" vector-effect="non-scaling-stroke"/><path d="M0 190 C45 175 55 180 100 170 S165 145 200 160 S265 135 300 150 S365 112 400 132 S465 145 500 125 S565 108 600 118 S665 90 700 104" fill="none" stroke="#6b8bb4" stroke-width="2.5" stroke-dasharray="6 5" vector-effect="non-scaling-stroke"/></svg><div class="chart-x"><span>۱ مهر</span><span>۵ مهر</span><span>۱۰ مهر</span><span>۱۵ مهر</span><span>۲۰ مهر</span><span>۲۵ مهر</span><span>۳۰ مهر</span></div></div></div>
+          </article>
+          <article class="panel material-panel">
+            <div class="panel-heading"><div><h2 data-i18n="materialMix">ترکیب موجودی مواد</h2><p data-i18n="materialMixSub">سهم هر گروه از موجودی کل</p></div><button class="more-btn" data-action="navigate" data-target="materials">•••</button></div>
+            <div class="donut-area"><div class="donut-chart"><div class="donut-center"><strong>۳۸۶.۴</strong><small>تن موجودی</small></div></div><div class="donut-legend"><div><i class="d-1"></i><span>فلزات</span><strong>۴۲٪</strong></div><div><i class="d-2"></i><span>پلاستیک</span><strong>۲۶٪</strong></div><div><i class="d-3"></i><span>کاغذ و مقوا</span><strong>۱۸٪</strong></div><div><i class="d-4"></i><span>سایر</span><strong>۱۴٪</strong></div></div></div>
+          </article>
+        </div>
+
+        <div class="lower-grid">
+          <article class="panel table-panel">
+            <div class="panel-heading"><div><h2 data-i18n="recentTransactions">آخرین معاملات</h2><p data-i18n="recentTransactionsSub">آخرین فعالیت‌های ثبت‌شده در مجموعه</p></div><button class="btn btn-outline btn-sm" data-action="navigate" data-target="purchases" data-i18n="viewAll">مشاهده همه</button></div>
+            <div class="table-toolbar"><label class="table-search">⌕ <input id="transactionSearch" placeholder="جستجو در معاملات..."></label><button class="filter-btn" data-action="toast" data-message="فیلترهای پیشرفته در نسخه کامل فعال هستند.">☷ <span data-i18n="filter">فیلتر</span></button></div>
+            <div class="table-scroll"><table class="data-table" id="transactionsTable"><thead><tr><th data-i18n="transactionId">شناسه معامله</th><th data-i18n="material">نوع ضایعات</th><th data-i18n="party">طرف حساب</th><th data-i18n="date">تاریخ</th><th data-i18n="weight">وزن</th><th data-i18n="amount">مبلغ</th><th data-i18n="status">وضعیت</th></tr></thead><tbody id="transactionRows">
+              <tr><td><strong class="mono">TRX-2408</strong></td><td><span class="material-cell"><i class="material-badge metal">Fe</i> آهن سنگین</span></td><td>شرکت فولاد آریا</td><td>۱۴۰۳/۰۷/۲۹</td><td>۱۲,۵۰۰ kg</td><td class="amount-cell">۱۸۷,۵۰۰,۰۰۰</td><td><span class="status status-success">تسویه شده</span></td></tr>
+              <tr><td><strong class="mono">TRX-2407</strong></td><td><span class="material-cell"><i class="material-badge copper">Cu</i> مس کابلی</span></td><td>احمد محمدی</td><td>۱۴۰۳/۰۷/۲۹</td><td>۸۵۰ kg</td><td class="amount-cell">۳۴۰,۰۰۰,۰۰۰</td><td><span class="status status-warning">در انتظار</span></td></tr>
+              <tr><td><strong class="mono">TRX-2406</strong></td><td><span class="material-cell"><i class="material-badge plastic">PET</i> پت شفاف</span></td><td>پارس پلیمر</td><td>۱۴۰۳/۰۷/۲۸</td><td>۳,۲۰۰ kg</td><td class="amount-cell">۹۶,۰۰۰,۰۰۰</td><td><span class="status status-success">تسویه شده</span></td></tr>
+              <tr><td><strong class="mono">TRX-2405</strong></td><td><span class="material-cell"><i class="material-badge paper">Pa</i> کارتن فشرده</span></td><td>بازیافت نوین</td><td>۱۴۰۳/۰۷/۲۸</td><td>۵,۰۰۰ kg</td><td class="amount-cell">۴۲,۵۰۰,۰۰۰</td><td><span class="status status-danger">سررسید گذشته</span></td></tr>
+            </tbody></table></div>
+          </article>
+          <article class="panel activity-panel">
+            <div class="panel-heading"><div><h2 data-i18n="activity">فعالیت‌های اخیر</h2><p data-i18n="activitySub">رویدادهای مهم سیستم</p></div><button class="more-btn" data-action="toast" data-message="همه فعالیت‌ها نمایش داده شد.">•••</button></div>
+            <div class="activity-list">
+              <div class="activity-item"><div class="activity-icon act-green">↗</div><div><strong>فاکتور فروش ثبت شد</strong><p>فروش ۱۲.۵ تن آهن سنگین به فولاد آریا</p><small>۱۰ دقیقه پیش · توسط محمد رضایی</small></div></div>
+              <div class="activity-item"><div class="activity-icon act-blue">▤</div><div><strong>توزین جدید ثبت شد</strong><p>خودرو ۴۵ ب ۸۲۱ · وزن خالص ۸,۴۰۰ کیلوگرم</p><small>۳۵ دقیقه پیش · توسط علی کریمی</small></div></div>
+              <div class="activity-item"><div class="activity-icon act-amber">◫</div><div><strong>پرداخت دریافت شد</strong><p>واریز ۸۵,۰۰۰,۰۰۰ تومان از پارس پلیمر</p><small>۱ ساعت پیش · توسط سارا احمدی</small></div></div>
+              <div class="activity-item"><div class="activity-icon act-violet">⚙</div><div><strong>عملیات فرآوری تکمیل شد</strong><p>تفکیک ۲.۴ تن پلاستیک مخلوط</p><small>۲ ساعت پیش · توسط علی کریمی</small></div></div>
+            </div>
+          </article>
+        </div>
+        <footer class="app-footer"><span>© 2024 ScrapOS. All rights reserved.</span><span>ساخته‌شده برای مدیریت هوشمند منابع <b>✦</b></span></footer>
+      </section>
+    </main>
+  </div>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+  <div class="modal-backdrop" id="modalBackdrop">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head"><div><span class="eyebrow">SCRAPOS WORKSPACE</span><h2 id="modalTitle">ثبت معامله جدید</h2></div><button class="icon-btn" id="modalClose">×</button></div>
+      <form id="transactionForm">
+        <div class="form-grid">
+          <label class="field"><span>نوع عملیات</span><select id="txType"><option value="خرید">خرید</option><option value="فروش">فروش</option></select></label>
+          <label class="field"><span>نوع ضایعات</span><select id="txMaterial"><option>آهن سنگین</option><option>مس کابلی</option><option>پت شفاف</option><option>کارتن فشرده</option><option>آلومینیوم نرم</option><option>ضایعات الکترونیکی</option></select></label>
+          <label class="field"><span>طرف حساب</span><input id="txParty" required placeholder="نام تأمین‌کننده یا مشتری"></label>
+          <label class="field"><span>وزن (کیلوگرم)</span><input id="txWeight" type="number" min="1" required placeholder="مثلاً 2500"></label>
+          <label class="field"><span>مبلغ کل (تومان)</span><input id="txAmount" type="number" min="1" required placeholder="مثلاً 75000000"></label>
+          <label class="field"><span>وضعیت</span><select id="txStatus"><option>تسویه شده</option><option>در انتظار</option><option>سررسید گذشته</option></select></label>
+        </div>
+        <div class="modal-actions"><button type="button" class="btn btn-quiet" id="modalCancel">انصراف</button><button type="submit" class="btn btn-primary">ثبت معامله <span>↗</span></button></div>
+      </form>
+    </section>
+  </div>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

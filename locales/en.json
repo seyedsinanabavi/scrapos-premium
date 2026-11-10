@@ -1,0 +1,15 @@
+{
+  "dashboard": "Dashboard",
+  "weighbridge": "Weighbridge",
+  "inventory": "Inventory",
+  "materials": "Material Catalog",
+  "purchases": "Purchases",
+  "sales": "Sales",
+  "processing": "Processing",
+  "contacts": "Contacts",
+  "finance": "Finance",
+  "fleet": "Fleet & Logistics",
+  "reports": "Reports & Analytics",
+  "team": "Team & Access",
+  "settings": "Settings"
+}
