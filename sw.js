@@ -3,13 +3,14 @@
 // API requests, cross-origin requests and non-GET requests are never cached,
 // so business data and tokens are never served from storage.
 
-const CACHE_NAME = "scrapos-shell-v1";
+const CACHE_NAME = "scrapos-shell-v2";
 
 const SHELL_FILES = [
   "./",
   "./index.html",
   "./manifest.json",
   "./assets/css/app.css",
+  "./assets/fonts/Kalameh-Bold.ttf",
   "./assets/icons/icon.svg",
   "./locales/fa.json",
   "./locales/en.json",

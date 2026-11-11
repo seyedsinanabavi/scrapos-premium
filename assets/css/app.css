@@ -1,4 +1,13 @@
+@font-face {
+  font-family: "Kalameh";
+  src: url("../fonts/Kalameh-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
+  --font-display: "Kalameh", "Vazirmatn", Inter, sans-serif;
   --bg: #f4f7f9;
   --surface: #fff;
   --surface-2: #f8fafb;
@@ -1416,4 +1425,12 @@ html[dir="ltr"] .modal-actions {
   html[dir="ltr"] .main-area {
     margin-right: 0;
   }
+}
+
+/* Headings and brand name use Kalameh; body text stays on Vazirmatn. */
+h1,
+h2,
+h3,
+.brand-copy strong {
+  font-family: var(--font-display);
 }
