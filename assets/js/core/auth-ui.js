@@ -1,5 +1,5 @@
 import { $, } from "./dom.js";
-import { apiBase, setApiBase, session, login, loadMe, api } from "./api.js";
+import { session, login, loadMe, api } from "./api.js";
 import { toast } from "./toast.js";
 
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -20,11 +20,10 @@ function screen(markup) {
 }
 
 export function showLogin(message = "") {
-  const root = screen(`<div class="auth-top"><span class="auth-logo">SCRAPOS</span><span class="eyebrow">WORKSPACE</span></div><h1>ورود به حساب کاربری</h1><p>برای مشاهده اطلاعات واقعی مجموعه، وارد حساب خود شوید.</p><form id="authLogin"><label class="field">آدرس API<input id="authApi" dir="ltr" value="${esc(apiBase())}" required></label><label class="field">ایمیل<input id="authEmail" type="email" autocomplete="username" required></label><label class="field">رمز عبور<input id="authPassword" type="password" autocomplete="current-password" required></label><div class="auth-error" id="authError">${esc(message)}</div><button class="btn btn-primary" type="submit">ورود امن</button></form><div class="auth-config">آدرس پیش‌فرض بک‌اند: ${esc(apiBase())}</div>`);
+  const root = screen(`<div class="auth-top"><span class="auth-logo">SCRAPOS</span><span class="eyebrow">WORKSPACE</span></div><h1>ورود به حساب کاربری</h1><p>برای مشاهده اطلاعات واقعی مجموعه، وارد حساب خود شوید.</p><form id="authLogin"><label class="field">ایمیل<input id="authEmail" type="email" autocomplete="username" required></label><label class="field">رمز عبور<input id="authPassword" type="password" autocomplete="current-password" required></label><div class="auth-error" id="authError">${esc(message)}</div><button class="btn btn-primary" type="submit">ورود امن</button></form>`);
   root.querySelector("#authLogin").addEventListener("submit", async e => {
     e.preventDefault(); const btn = e.currentTarget.querySelector("button"); btn.disabled = true; btn.textContent = "در حال ورود…";
     try {
-      setApiBase(root.querySelector("#authApi").value);
       const value = await login(root.querySelector("#authEmail").value, root.querySelector("#authPassword").value);
       if (value.businesses.length > 1) showBusinessPicker(value);
       else if (!value.business) { session.clear(); showLogin("این حساب به هیچ مجموعه‌ای متصل نیست."); }
