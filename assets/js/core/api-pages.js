@@ -27,18 +27,28 @@ async function lookups() {
   };
 }
 
+// Lists used by the create-transaction form (parties, materials, warehouses).
+export async function loadLists() {
+  const [parties, materials, warehouses] = await Promise.all([get("/parties"), get("/materials"), get("/warehouses")]);
+  return { parties, materials, warehouses };
+}
+
 async function documentRows(path) {
-  const [{ parties }, docs] = await Promise.all([lookups(), get(path)]);
-  // The list does not include items yet, so material and weight show as "—" here.
-  return docs.map((d) => [
-    d.number,
-    parties.get(d.party_id)?.name || "—",
-    "—",
-    fmtDate(d.confirmed_at || d.created_at),
-    "—",
-    fmtNum(d.total_minor),
-    statusLabel(d.status),
-  ]);
+  const [{ parties, materials }, docs] = await Promise.all([lookups(), get(path)]);
+  return docs.map((d) => {
+    const items = d.items || [];
+    const kg = items.reduce((sum, it) => sum + Number(it.quantity || 0), 0);
+    const names = [...new Set(items.map((it) => materials.get(it.material_id)?.name_fa).filter(Boolean))];
+    return [
+      d.number,
+      parties.get(d.party_id)?.name || "—",
+      names.join("، ") || "—",
+      fmtDate(d.confirmed_at || d.created_at),
+      items.length ? fmtNum(kg) : "—",
+      fmtNum(d.total_minor),
+      statusLabel(d.status),
+    ];
+  });
 }
 
 export const apiPages = {

@@ -231,22 +231,14 @@
             >
             <label class="field"
               ><span>نوع ضایعات</span
-              ><select id="txMaterial">
-                <option>آهن سنگین</option>
-                <option>مس کابلی</option>
-                <option>پت شفاف</option>
-                <option>کارتن فشرده</option>
-                <option>آلومینیوم نرم</option>
-                <option>ضایعات الکترونیکی</option>
-              </select></label
+              ><select id="txMaterial"><option value="">در حال بارگذاری…</option></select></label
             >
             <label class="field"
               ><span>طرف حساب</span
-              ><input
-                id="txParty"
-                required
-                placeholder="نام تأمین‌کننده یا مشتری"
-            /></label>
+              ><select id="txParty" required><option value="">در حال بارگذاری…</option></select></label>
+            <label class="field"
+              ><span>انبار</span
+              ><select id="txWarehouse" required><option value="">در حال بارگذاری…</option></select></label>
             <label class="field"
               ><span>وزن (کیلوگرم)</span
               ><input
@@ -257,13 +249,13 @@
                 placeholder="مثلاً 2500"
             /></label>
             <label class="field"
-              ><span>مبلغ کل (تومان)</span
+              ><span>قیمت هر کیلوگرم (تومان)</span
               ><input
                 id="txAmount"
                 type="number"
                 min="1"
                 required
-                placeholder="مثلاً 75000000"
+                placeholder="مثلاً 45000"
             /></label>
             <label class="field"
               ><span>وضعیت</span

@@ -5,7 +5,7 @@ import { pageTitle } from "./i18n.js";
 import { closeSidebar } from "../features/sidebar.js";
 import { dashboardMarkup, bindDashboard } from "../views/dashboard.js";
 import { tablePageMarkup, bindTableSearch } from "../views/table.js";
-import { reportsMarkup } from "../views/reports.js";
+import { reportsMarkup, bindReports } from "../views/reports.js";
 import { settingsMarkup } from "../views/settings.js";
 import { apiPages } from "./api-pages.js";
 import { esc } from "./html.js";
@@ -56,6 +56,7 @@ export function renderPage(page) {
   $("#pageContent").innerHTML =
     pageHeadingMarkup(page, pageTitle(page, p.title), p.sub) + body;
   bindTableSearch();
+  if (page === "reports") bindReports();
 }
 
 export function navigate(requested) {

@@ -24,7 +24,7 @@ export function setApiBase(value) {
 
 export async function api(path, options = {}) {
   const auth = session.value;
-  const { idempotent, ...requestOptions } = options;
+  const { idempotent, raw, ...requestOptions } = options;
   const headers = new Headers(requestOptions.headers || {});
   headers.set("Accept", "application/json");
   if (requestOptions.body && !(requestOptions.body instanceof FormData)) headers.set("Content-Type", "application/json");
@@ -41,6 +41,11 @@ export async function api(path, options = {}) {
     });
   } catch {
     throw new Error("ارتباط با سرور برقرار نشد. آدرس API و تنظیمات CORS را بررسی کنید.");
+  }
+
+  if (raw) {
+    if (!response.ok) throw new Error(`خطای سرور (${response.status})`);
+    return response.blob();
   }
 
   const payload = response.status === 204 ? null : await response.json().catch(() => ({}));
