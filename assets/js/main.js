@@ -10,8 +10,10 @@ import { bindSidebar } from "./features/sidebar.js";
 import { bindGlobalSearch } from "./features/shortcuts.js";
 import { bindTransactionForm } from "./features/transaction-form.js";
 import { initAuth } from "./core/auth-ui.js";
+import { registerServiceWorker } from "./core/pwa.js";
 
 async function boot() {
+  registerServiceWorker();
   initTheme();
   bindModal();
   bindActions();

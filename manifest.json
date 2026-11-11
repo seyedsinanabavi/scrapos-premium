@@ -1,0 +1,21 @@
+{
+  "name": "ScrapOS — مدیریت هوشمند ضایعات",
+  "short_name": "ScrapOS",
+  "description": "ScrapOS — سامانه‌ی مدیریت بازیافت و ضایعات",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#101827",
+  "theme_color": "#101827",
+  "icons": [
+    {
+      "src": "assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
