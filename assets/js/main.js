@@ -9,6 +9,7 @@ import { bindActions } from "./features/actions.js";
 import { bindSidebar } from "./features/sidebar.js";
 import { bindGlobalSearch } from "./features/shortcuts.js";
 import { bindTransactionForm } from "./features/transaction-form.js";
+import { initAuth } from "./core/auth-ui.js";
 
 async function boot() {
   initTheme();
@@ -26,7 +27,11 @@ async function boot() {
 
   initRouter();
   await applyLocale("fa").catch(() => {});
-  startRouter();
+
+  // Nothing is rendered from server data until the user is signed in and has a business selected.
+  const ready = await initAuth();
+  if (ready) startRouter();
+  else window.addEventListener("scrapos:authenticated", () => startRouter(), { once: true });
 }
 
 boot();

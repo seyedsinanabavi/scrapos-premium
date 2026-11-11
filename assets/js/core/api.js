@@ -2,14 +2,14 @@ const STORAGE_KEY = "scrapos.auth.v1";
 const CONFIG_KEY = "scrapos.apiBase";
 
 function readSession() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); }
+  try { return JSON.parse(sessionStorage.getItem(STORAGE_KEY) || "null"); }
   catch { return null; }
 }
 
 export const session = {
   get value() { return readSession(); },
-  save(value) { localStorage.setItem(STORAGE_KEY, JSON.stringify(value)); },
-  clear() { localStorage.removeItem(STORAGE_KEY); },
+  save(value) { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(value)); },
+  clear() { sessionStorage.removeItem(STORAGE_KEY); },
 };
 
 export function apiBase() {
