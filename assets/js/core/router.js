@@ -7,6 +7,8 @@ import { dashboardMarkup, bindDashboard } from "../views/dashboard.js";
 import { tablePageMarkup, bindTableSearch } from "../views/table.js";
 import { reportsMarkup } from "../views/reports.js";
 import { settingsMarkup } from "../views/settings.js";
+import { apiPages } from "./api-pages.js";
+import { esc } from "./html.js";
 
 export const currentPageKey = () => (location.hash || "#dashboard").slice(1);
 
@@ -17,8 +19,27 @@ function pageHeadingMarkup(page, title, subtitle) {
   return `<div class="page-heading"><div><div class="eyebrow"><span class="live-dot"></span> SCRAPOS WORKSPACE</div><h1>${title}</h1><p>${subtitle}</p></div><div class="heading-actions"><button class="btn btn-quiet" data-action="toast" data-message="بازه زمانی انتخاب شد.">▦ ۳۰ روز گذشته ⌄</button><button class="btn btn-primary" data-action="${addAction}"><span>＋</span>${addLabel}</button></div></div>`;
 }
 
+async function renderApiPage(page, p) {
+  const heading = pageHeadingMarkup(page, pageTitle(page, p.title), p.sub);
+  $("#pageContent").innerHTML = heading + '<article class="panel"><p class="muted">در حال بارگذاری اطلاعات…</p></article>';
+  try {
+    const rows = await apiPages[page]();
+    if (currentPageKey() !== page) return;
+    $("#pageContent").innerHTML = heading + tablePageMarkup(page, { ...p, rows });
+    bindTableSearch();
+  } catch (err) {
+    if (currentPageKey() !== page) return;
+    $("#pageContent").innerHTML = heading + `<article class="panel"><p class="status status-danger">${esc(err.message)}</p></article>`;
+  }
+}
+
 export function renderPage(page) {
   const p = pages[page];
+
+  if (apiPages[page]) {
+    renderApiPage(page, p);
+    return;
+  }
 
   if (p.kind === "dashboard") {
     location.hash = page;
