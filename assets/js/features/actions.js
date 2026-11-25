@@ -1,6 +1,7 @@
 // Delegated handler for every element with a data-action attribute.
 import { exportTable } from "../core/csv-export.js";
 import { openModal } from "../core/modal.js";
+import { openWeighForm } from "./weigh-form.js";
 import { navigate } from "../core/router.js";
 import { toast } from "../core/toast.js";
 
@@ -21,7 +22,7 @@ export function bindActions() {
         openModal();
         break;
       case "weigh":
-        toast("فرم ثبت توزین در نسخه کامل به باسکول متصل می‌شود.");
+        openWeighForm();
         break;
       case "date-range":
         toast("بازه زمانی: ۳۰ روز گذشته");

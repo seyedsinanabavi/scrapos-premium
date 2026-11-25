@@ -276,6 +276,33 @@
         </form>
       </section>
     </div>
+    <div class="modal-backdrop" id="weighBackdrop">
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="weighTitle">
+        <div class="modal-head">
+          <div>
+            <span class="eyebrow">SCRAPOS WORKSPACE</span>
+            <h2 id="weighTitle">ثبت توزین جدید</h2>
+          </div>
+          <button class="icon-btn" id="weighClose">×</button>
+        </div>
+        <form id="weighForm">
+          <div class="form-grid">
+            <label class="field"><span>جهت</span><select id="wType"><option value="inbound">ورودی</option><option value="outbound">خروجی</option></select></label>
+            <label class="field"><span>طرف حساب</span><select id="wParty"></select></label>
+            <label class="field"><span>نوع ضایعات</span><select id="wMaterial" required></select></label>
+            <label class="field"><span>انبار</span><select id="wWarehouse"></select></label>
+            <label class="field"><span>پلاک خودرو</span><input id="wPlate" placeholder="مثلاً 12ب345 ایران 67"></label>
+            <label class="field"><span>نام راننده</span><input id="wDriver"></label>
+            <label class="field"><span>وزن ناخالص (کیلوگرم)</span><input id="wGross" type="number" min="1" required></label>
+            <label class="field"><span>وزن تاره (کیلوگرم)</span><input id="wTare" type="number" min="0" required></label>
+            <label class="field wide"><span>یادداشت</span><input id="wNotes"></label>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-quiet" id="weighCancel">انصراف</button><button type="submit" class="btn btn-primary">ثبت و تأیید توزین</button>
+          </div>
+        </form>
+      </section>
+    </div>
     <script type="module" src="assets/js/main.js"></script>
   </body>
 </html>

@@ -9,6 +9,7 @@ import { bindActions } from "./features/actions.js";
 import { bindSidebar } from "./features/sidebar.js";
 import { bindGlobalSearch } from "./features/shortcuts.js";
 import { bindTransactionForm } from "./features/transaction-form.js";
+import { bindWeighForm } from "./features/weigh-form.js";
 import { initAuth } from "./core/auth-ui.js";
 import { registerServiceWorker } from "./core/pwa.js";
 
@@ -20,6 +21,7 @@ async function boot() {
   bindSidebar();
   bindGlobalSearch();
   bindTransactionForm();
+  bindWeighForm();
 
   $("#themeToggle").onclick = toggleTheme;
   $("#languageToggle").onclick = () => {

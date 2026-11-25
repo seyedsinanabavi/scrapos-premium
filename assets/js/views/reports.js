@@ -46,10 +46,10 @@ async function loadMetrics() {
       api(`/reports/weighbridge?from=${from}&to=${to}`),
       api("/reports/party-balances").then(unwrap),
     ]);
-    $("rSales").textContent = fmt(trade.sales.total_minor);
-    $("rPurchases").textContent = fmt(trade.purchases.total_minor);
-    $("rWeighbridge").textContent = fmt(weighbridge.inbound.tickets + weighbridge.outbound.tickets);
-    $("rReceivable").textContent = fmt(balances.reduce((sum, b) => sum + Number(b.receivable_minor || 0), 0));
+    $("#rSales").textContent = fmt(trade.sales.total_minor);
+    $("#rPurchases").textContent = fmt(trade.purchases.total_minor);
+    $("#rWeighbridge").textContent = fmt(weighbridge.inbound.tickets + weighbridge.outbound.tickets);
+    $("#rReceivable").textContent = fmt(balances.reduce((sum, b) => sum + Number(b.receivable_minor || 0), 0));
   } catch (err) {
     toast(err.message);
   }
