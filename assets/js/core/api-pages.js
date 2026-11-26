@@ -95,14 +95,25 @@ export const apiPages = {
   },
 
   processing: async () => {
-    const [{ warehouses }, batches] = await Promise.all([lookups(), get("/processing-batches")]);
-    // Input and output weights need the batch lines, which the list does not include yet.
-    return batches.map((b) => [
-      b.number,
-      warehouses.get(b.warehouse_id)?.name || "—",
-      "—", "—", "—", "—",
-      statusLabel(b.status),
-    ]);
+    const [{ warehouses, materials }, batches] = await Promise.all([lookups(), get("/processing-batches")]);
+    return batches.map((b) => {
+      const lines = b.lines || [];
+      const ins = lines.filter((l) => l.direction === "in");
+      const outs = lines.filter((l) => l.direction === "out");
+      const sum = (rows) => rows.reduce((acc, l) => acc + Number(l.quantity || 0), 0);
+      const inKg = sum(ins);
+      const outKg = sum(outs);
+      const names = [...new Set(ins.map((l) => materials.get(l.material_id)?.name_fa).filter(Boolean))];
+      return [
+        b.number,
+        warehouses.get(b.warehouse_id)?.name || "—",
+        names.join("، ") || "—",
+        lines.length ? fmtNum(inKg) : "—",
+        lines.length ? fmtNum(outKg) : "—",
+        inKg > 0 ? `${fmtNum(Math.round((outKg / inKg) * 1000) / 10)}٪` : "—",
+        statusLabel(b.status),
+      ];
+    });
   },
 
   contacts: async () => {

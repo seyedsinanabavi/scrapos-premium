@@ -317,6 +317,29 @@
         </form>
       </section>
     </div>
+    <div class="modal-backdrop" id="procBackdrop">
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="procTitle">
+        <div class="modal-head">
+          <div><span class="eyebrow">SCRAPOS WORKSPACE</span><h2 id="procTitle">ثبت عملیات فرآوری</h2></div>
+          <button class="icon-btn" id="procClose">×</button>
+        </div>
+        <form id="procForm">
+          <div class="form-grid">
+            <label class="field"><span>انبار / خط فرآوری</span><select id="procWarehouse" required></select></label>
+            <label class="field"><span>یادداشت</span><input id="procNotes"></label>
+          </div>
+          <h3>ورودی‌ها</h3>
+          <div id="procInputs"></div>
+          <button type="button" class="btn btn-outline btn-sm" id="procAddIn">＋ افزودن ورودی</button>
+          <h3>خروجی‌ها</h3>
+          <div id="procOutputs"></div>
+          <button type="button" class="btn btn-outline btn-sm" id="procAddOut">＋ افزودن خروجی</button>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-quiet" id="procCancel">انصراف</button><button type="submit" class="btn btn-primary">ثبت و تأیید</button>
+          </div>
+        </form>
+      </section>
+    </div>
     <script type="module" src="assets/js/main.js"></script>
   </body>
 </html>
