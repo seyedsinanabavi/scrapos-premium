@@ -12,15 +12,15 @@ const STATUS = { draft: "پیش‌نویس", confirmed: "تأیید شده", can
 const STATUS_CLASS = { draft: "status-warning", confirmed: "status-success", cancelled: "status-danger" };
 
 export function dashboardMarkup() {
-  return `<div class="page-heading"><div><div class="eyebrow"><span class="live-dot"></span> نمای کلی کسب‌وکار</div><h1>داشبورد</h1><p>خلاصه‌ی ۳۰ روز اخیر و آخرین اسناد مجموعه.</p></div><div class="heading-actions"><button class="btn btn-primary" data-action="new-transaction"><span>＋</span>ثبت معامله جدید</button></div></div><div class="metric-grid"><article class="metric-card"><div class="metric-top">فروش ۳۰ روز اخیر <span class="metric-icon icon-emerald">↗</span></div><div class="metric-value" id="mSales">…</div><div class="metric-foot" id="mSalesFoot">اسناد تأییدشده</div></article><article class="metric-card"><div class="metric-top">خرید ۳۰ روز اخیر <span class="metric-icon icon-blue">↙</span></div><div class="metric-value" id="mPurchases">…</div><div class="metric-foot" id="mPurchasesFoot">اسناد تأییدشده</div></article><article class="metric-card"><div class="metric-top">مطالبات از مشتری‌ها <span class="metric-icon icon-amber">◫</span></div><div class="metric-value" id="mReceivable">…</div><div class="metric-foot">مانده‌ی اسناد فروش</div></article><article class="metric-card"><div class="metric-top">بدهی به تأمین‌کننده‌ها <span class="metric-icon icon-violet">◫</span></div><div class="metric-value" id="mPayable">…</div><div class="metric-foot">مانده‌ی اسناد خرید</div></article></div><div class="lower-grid"><article class="panel table-panel"><div class="panel-heading"><div><h2>آخرین اسناد</h2><p>آخرین خریدها و فروش‌های ثبت‌شده</p></div><button class="btn btn-outline btn-sm" data-action="navigate" data-target="purchases">مشاهده همه</button></div><div class="table-toolbar"><label class="table-search">⌕ <input id="transactionSearch" placeholder="جستجو در اسناد..."></label></div><div class="table-scroll"><table class="data-table"><thead><tr><th>شماره سند</th><th>نوع</th><th>طرف حساب</th><th>تاریخ</th><th>وزن (کیلوگرم)</th><th>مبلغ (تومان)</th><th>وضعیت</th></tr></thead><tbody id="transactionRows"><tr><td colspan="7">در حال بارگذاری…</td></tr></tbody></table></div></article></div>`;
+  return `<div class="page-heading"><div><div class="eyebrow"><span class="live-dot"></span> نمای کلی کسب‌وکار</div><h1>داشبورد</h1><p>خلاصه‌ی ۳۰ روز اخیر و آخرین اسناد مجموعه.</p></div><div class="heading-actions"><button class="btn btn-primary" data-action="new-transaction"><span>＋</span>ثبت معامله جدید</button></div></div><div class="metric-grid"><article class="metric-card"><div class="metric-top">فروش ۳۰ روز اخیر <span class="metric-icon icon-emerald">↗</span></div><div class="metric-value" id="mSales">…</div><div class="metric-foot" id="mSalesFoot">اسناد تأییدشده</div></article><article class="metric-card"><div class="metric-top">خرید ۳۰ روز اخیر <span class="metric-icon icon-blue">↙</span></div><div class="metric-value" id="mPurchases">…</div><div class="metric-foot" id="mPurchasesFoot">اسناد تأییدشده</div></article><article class="metric-card"><div class="metric-top">مطالبات از مشتری‌ها <span class="metric-icon icon-amber">◫</span></div><div class="metric-value" id="mReceivable">…</div><div class="metric-foot">مانده‌ی اسناد فروش</div></article><article class="metric-card"><div class="metric-top">بدهی به تأمین‌کننده‌ها <span class="metric-icon icon-violet">◫</span></div><div class="metric-value" id="mPayable">…</div><div class="metric-foot">مانده‌ی اسناد خرید</div></article></div><div class="lower-grid"><article class="panel table-panel"><div class="panel-heading"><div><h2>آخرین اسناد</h2><p>آخرین خریدها و فروش‌های ثبت‌شده</p></div><button class="btn btn-outline btn-sm" data-action="navigate" data-target="purchases">مشاهده همه</button></div><div class="table-toolbar"><label class="table-search">⌕ <input id="transactionSearch" placeholder="جستجو در اسناد..."></label></div><div class="table-scroll"><table class="data-table"><thead><tr><th>شماره سند</th><th>نوع</th><th>طرف حساب</th><th>تاریخ</th><th>وزن (کیلوگرم)</th><th>مبلغ (تومان)</th><th>وضعیت</th><th>فاکتور</th></tr></thead><tbody id="transactionRows"><tr><td colspan="8">در حال بارگذاری…</td></tr></tbody></table></div></article></div>`;
 }
 
 function rowsMarkup(rows) {
-  if (!rows.length) return `<tr><td colspan="7">سندی ثبت نشده است.</td></tr>`;
+  if (!rows.length) return `<tr><td colspan="8">سندی ثبت نشده است.</td></tr>`;
   return rows
     .map(
       (r) =>
-        `<tr><td><strong class="mono">${esc(r.number)}</strong></td><td>${esc(r.kind)}</td><td>${esc(r.party)}</td><td>${esc(r.date)}</td><td>${esc(r.weight)}</td><td class="amount-cell">${esc(r.total)}</td><td><span class="status ${STATUS_CLASS[r.status] || ""}">${esc(STATUS[r.status] || r.status)}</span></td></tr>`,
+        `<tr><td><strong class="mono">${esc(r.number)}</strong></td><td>${esc(r.kind)}</td><td>${esc(r.party)}</td><td>${esc(r.date)}</td><td>${esc(r.weight)}</td><td class="amount-cell">${esc(r.total)}</td><td><span class="status ${STATUS_CLASS[r.status] || ""}">${esc(STATUS[r.status] || r.status)}</span></td><td><button class="btn btn-outline btn-sm" data-invoice="${esc(r.invoicePath)}">PDF</button></td></tr>`,
     )
     .join("");
 }
@@ -73,6 +73,7 @@ async function loadRecent() {
         const items = doc.items || [];
         const kg = items.reduce((sum, it) => sum + Number(it.quantity || 0), 0);
         return {
+          invoicePath: `${kind === "فروش" ? "/sales" : "/purchases"}/${doc.id}/invoice/pdf`,
           number: doc.number,
           kind,
           party: partyName.get(doc.party_id) || "—",
@@ -85,11 +86,37 @@ async function loadRecent() {
 
     $("#transactionRows").innerHTML = rowsMarkup(rows);
   } catch (err) {
-    $("#transactionRows").innerHTML = `<tr><td colspan="7">${esc(err.message)}</td></tr>`;
+    $("#transactionRows").innerHTML = `<tr><td colspan="8">${esc(err.message)}</td></tr>`;
+  }
+}
+
+// The invoice needs the Bearer token and business header, so it is fetched with api() and opened as a blob.
+async function openInvoice(button) {
+  const win = window.open("", "_blank");
+  button.disabled = true;
+  try {
+    const blob = await api(button.dataset.invoice, { raw: true });
+    const url = URL.createObjectURL(blob);
+    if (win) win.location.href = url;
+    else window.open(url, "_blank");
+    setTimeout(() => URL.revokeObjectURL(url), 60_000);
+  } catch (err) {
+    if (win) win.close();
+    toast(err.message);
+  } finally {
+    button.disabled = false;
   }
 }
 
 export function bindDashboard() {
+  const body = $("#transactionRows");
+  if (body) {
+    body.addEventListener("click", (e) => {
+      const button = e.target.closest("[data-invoice]");
+      if (button) openInvoice(button);
+    });
+  }
+
   const search = $("#transactionSearch");
   if (search) search.oninput = () => filterRows("#transactionRows", search.value);
 
