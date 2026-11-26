@@ -13,9 +13,13 @@ import { esc } from "./html.js";
 export const currentPageKey = () => (location.hash || "#dashboard").slice(1);
 
 function pageHeadingMarkup(page, title, subtitle) {
-  const isWeighbridge = page === "weighbridge";
-  const addAction = isWeighbridge ? "weigh" : "add";
-  const addLabel = isWeighbridge ? "ثبت توزین جدید" : "افزودن مورد جدید";
+  const ADD = {
+    weighbridge: ["weigh", "ثبت توزین جدید"],
+    contacts: ["add-party", "افزودن شخص جدید"],
+    materials: ["add-material", "افزودن ماده جدید"],
+    inventory: ["add-warehouse", "افزودن انبار جدید"],
+  };
+  const [addAction, addLabel] = ADD[page] || ["add", "افزودن مورد جدید"];
   return `<div class="page-heading"><div><div class="eyebrow"><span class="live-dot"></span> SCRAPOS WORKSPACE</div><h1>${title}</h1><p>${subtitle}</p></div><div class="heading-actions"><button class="btn btn-quiet" data-action="toast" data-message="بازه زمانی انتخاب شد.">▦ ۳۰ روز گذشته ⌄</button><button class="btn btn-primary" data-action="${addAction}"><span>＋</span>${addLabel}</button></div></div>`;
 }
 

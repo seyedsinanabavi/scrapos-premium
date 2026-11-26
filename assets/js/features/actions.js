@@ -2,6 +2,7 @@
 import { exportTable } from "../core/csv-export.js";
 import { openModal } from "../core/modal.js";
 import { openWeighForm } from "./weigh-form.js";
+import { openEntityForm } from "./entity-form.js";
 import { navigate } from "../core/router.js";
 import { toast } from "../core/toast.js";
 
@@ -23,6 +24,15 @@ export function bindActions() {
         break;
       case "weigh":
         openWeighForm();
+        break;
+      case "add-party":
+        openEntityForm("party");
+        break;
+      case "add-material":
+        openEntityForm("material");
+        break;
+      case "add-warehouse":
+        openEntityForm("warehouse");
         break;
       case "date-range":
         toast("بازه زمانی: ۳۰ روز گذشته");

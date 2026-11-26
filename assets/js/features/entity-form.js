@@ -1,0 +1,130 @@
+// One modal for creating parties, materials and warehouses. Each kind lists its fields and its API endpoint.
+import { $ } from "../core/dom.js";
+import { esc } from "../core/html.js";
+import { api, unwrap } from "../core/api.js";
+import { toast } from "../core/toast.js";
+import { renderPage, currentPageKey } from "../core/router.js";
+
+const KINDS = {
+  party: {
+    title: "شخص جدید",
+    endpoint: "/parties",
+    fields: [
+      { key: "name", label: "نام", required: true },
+      { key: "phone", label: "تلفن" },
+      { key: "address", label: "آدرس" },
+      { key: "roles", type: "checks", options: [["is_customer", "مشتری"], ["is_supplier", "تأمین‌کننده"], ["is_driver", "راننده"], ["is_contractor", "پیمانکار"]] },
+      { key: "notes", label: "یادداشت" },
+    ],
+  },
+  material: {
+    title: "ماده‌ی جدید",
+    endpoint: "/materials",
+    fields: [
+      { key: "category_id", label: "گروه", type: "select", source: "categories", required: true },
+      { key: "code", label: "کد", required: true, ltr: true },
+      { key: "name_fa", label: "نام فارسی", required: true },
+      { key: "name_en", label: "نام انگلیسی", ltr: true },
+      { key: "unit", label: "واحد", required: true, value: "kg" },
+      { key: "suggested_buy_price_minor", label: "قیمت پیشنهادی خرید (تومان)", type: "number" },
+      { key: "suggested_sell_price_minor", label: "قیمت پیشنهادی فروش (تومان)", type: "number" },
+      { key: "reorder_level", label: "حد سفارش مجدد", type: "number" },
+    ],
+  },
+  warehouse: {
+    title: "انبار جدید",
+    endpoint: "/warehouses",
+    fields: [
+      { key: "code", label: "کد انبار", required: true, ltr: true },
+      { key: "name", label: "نام انبار", required: true },
+      { key: "address", label: "آدرس" },
+    ],
+  },
+};
+
+let currentKind = null;
+
+async function renderFields(kind) {
+  const config = KINDS[kind];
+  $("#entityTitle").textContent = config.title;
+
+  let categories = [];
+  if (config.fields.some((f) => f.source === "categories")) {
+    try {
+      categories = await api("/material-categories").then(unwrap);
+    } catch (err) {
+      toast(err.message);
+    }
+  }
+
+  $("#entityFields").innerHTML = config.fields
+    .map((f) => {
+      if (f.type === "checks") {
+        return `<div class="field wide"><span>نقش‌ها</span><div class="check-row">${f.options
+          .map(([k, label]) => `<label><input type="checkbox" data-check="${esc(k)}"> ${esc(label)}</label>`)
+          .join("")}</div></div>`;
+      }
+      if (f.type === "select") {
+        const options = categories.map((c) => `<option value="${esc(c.id)}">${esc(c.name)}</option>`).join("");
+        return `<label class="field"><span>${esc(f.label)}${f.required ? " *" : ""}</span><select data-key="${esc(f.key)}" ${f.required ? "required" : ""}><option value="">انتخاب کنید</option>${options}</select></label>`;
+      }
+      const type = f.type === "number" ? "number" : "text";
+      return `<label class="field"><span>${esc(f.label)}${f.required ? " *" : ""}</span><input data-key="${esc(f.key)}" type="${type}" ${f.required ? "required" : ""} ${f.ltr ? 'dir="ltr"' : ""} value="${esc(f.value ?? "")}"></label>`;
+    })
+    .join("");
+}
+
+export async function openEntityForm(kind) {
+  currentKind = kind;
+  $("#entityBackdrop").classList.add("open");
+  await renderFields(kind);
+}
+
+function closeEntity() {
+  $("#entityBackdrop").classList.remove("open");
+  $("#entityForm").reset();
+}
+
+function collect(kind) {
+  const config = KINDS[kind];
+  const body = {};
+  for (const f of config.fields) {
+    if (f.type === "checks") {
+      f.options.forEach(([key]) => {
+        body[key] = document.querySelector(`[data-check="${key}"]`)?.checked === true;
+      });
+      continue;
+    }
+    const el = document.querySelector(`#entityForm [data-key="${f.key}"]`);
+    const raw = el ? el.value.trim() : "";
+    if (f.type === "number") body[f.key] = raw === "" ? null : Number(raw);
+    else body[f.key] = raw === "" ? null : raw;
+  }
+  return body;
+}
+
+export function bindEntityForm() {
+  $("#entityClose").onclick = closeEntity;
+  $("#entityCancel").onclick = closeEntity;
+  $("#entityBackdrop").addEventListener("click", (e) => {
+    if (e.target.id === "entityBackdrop") closeEntity();
+  });
+
+  $("#entityForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!currentKind) return;
+    const form = e.currentTarget;
+    const submit = form.querySelector('button[type="submit"]');
+    submit.disabled = true;
+    try {
+      await api(KINDS[currentKind].endpoint, { method: "POST", body: collect(currentKind), idempotent: true });
+      toast(`${KINDS[currentKind].title} ثبت شد.`);
+      closeEntity();
+      if (currentPageKey()) renderPage(currentPageKey());
+    } catch (err) {
+      toast(err.message);
+    } finally {
+      submit.disabled = false;
+    }
+  });
+}
