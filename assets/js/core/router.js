@@ -6,7 +6,7 @@ import { closeSidebar } from "../features/sidebar.js";
 import { dashboardMarkup, bindDashboard } from "../views/dashboard.js";
 import { tablePageMarkup, bindTableSearch } from "../views/table.js";
 import { reportsMarkup, bindReports } from "../views/reports.js";
-import { settingsMarkup } from "../views/settings.js";
+import { settingsMarkup, bindSettings } from "../views/settings.js";
 import { apiPages } from "./api-pages.js";
 import { esc } from "./html.js";
 
@@ -57,6 +57,7 @@ export function renderPage(page) {
     pageHeadingMarkup(page, pageTitle(page, p.title), p.sub) + body;
   bindTableSearch();
   if (page === "reports") bindReports();
+  if (page === "settings") bindSettings();
 }
 
 export function navigate(requested) {

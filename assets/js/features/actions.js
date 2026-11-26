@@ -30,9 +30,6 @@ export function bindActions() {
       case "export":
         exportTable();
         break;
-      case "save-settings":
-        toast("تنظیمات نمونه ذخیره شد.");
-        break;
       case "switch":
         el.classList.toggle("on");
         break;
