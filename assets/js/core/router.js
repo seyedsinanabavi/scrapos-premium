@@ -9,6 +9,7 @@ import { reportsMarkup, bindReports } from "../views/reports.js";
 import { settingsMarkup, bindSettings } from "../views/settings.js";
 import { apiPages } from "./api-pages.js";
 import { esc } from "./html.js";
+import { renderProcessingCancel } from "../features/processing-cancel.js";
 
 export const currentPageKey = () => (location.hash || "#dashboard").slice(1);
 
@@ -19,6 +20,8 @@ function pageHeadingMarkup(page, title, subtitle) {
     materials: ["add-material", "افزودن ماده جدید"],
     inventory: ["add-warehouse", "افزودن انبار جدید"],
     processing: ["add-processing", "ثبت عملیات فرآوری"],
+    fleet: ["add-vehicle", "ثبت خودرو جدید"],
+    finance: ["add-transaction", "ثبت تراکنش مالی"],
   };
   const [addAction, addLabel] = ADD[page] || ["add", "افزودن مورد جدید"];
   return `<div class="page-heading"><div><div class="eyebrow"><span class="live-dot"></span> SCRAPOS WORKSPACE</div><h1>${title}</h1><p>${subtitle}</p></div><div class="heading-actions"><button class="btn btn-quiet" data-action="toast" data-message="بازه زمانی انتخاب شد.">▦ ۳۰ روز گذشته ⌄</button><button class="btn btn-primary" data-action="${addAction}"><span>＋</span>${addLabel}</button></div></div>`;
@@ -32,6 +35,7 @@ async function renderApiPage(page, p) {
     if (currentPageKey() !== page) return;
     $("#pageContent").innerHTML = heading + tablePageMarkup(page, { ...p, rows });
     bindTableSearch();
+    if (page === "processing") renderProcessingCancel();
   } catch (err) {
     if (currentPageKey() !== page) return;
     $("#pageContent").innerHTML = heading + `<article class="panel"><p class="status status-danger">${esc(err.message)}</p></article>`;

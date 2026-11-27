@@ -1,4 +1,4 @@
-// One modal for creating parties, materials and warehouses. Each kind lists its fields and its API endpoint.
+// One modal for creating parties, materials, warehouses, vehicles and finance transactions. Each kind lists its fields and its API endpoint.
 import { $ } from "../core/dom.js";
 import { esc } from "../core/html.js";
 import { api, unwrap } from "../core/api.js";
@@ -40,7 +40,50 @@ const KINDS = {
       { key: "address", label: "آدرس" },
     ],
   },
+  vehicle: {
+    title: "خودروی جدید",
+    endpoint: "/vehicles",
+    fields: [
+      { key: "plate", label: "پلاک", required: true, ltr: true },
+      { key: "type", label: "نوع خودرو" },
+      { key: "capacity_kg", label: "ظرفیت (کیلوگرم)", type: "number" },
+      { key: "driver_id", label: "راننده", type: "select", source: "drivers" },
+      { key: "notes", label: "یادداشت" },
+    ],
+  },
+  finance: {
+    title: "تراکنش مالی جدید",
+    endpoint: "/finance/transactions",
+    fields: [
+      { key: "account_id", label: "حساب", type: "select", source: "accounts", required: true },
+      {
+        key: "direction", label: "نوع", type: "select", required: true,
+        options: [["in", "دریافت (ورودی)"], ["out", "پرداخت (خروجی)"]],
+      },
+      { key: "amount_minor", label: "مبلغ (تومان)", type: "number", required: true },
+      { key: "reason", label: "شرح", required: true },
+    ],
+  },
 };
+
+// Options for a select field: either fixed options or a list loaded from the API.
+async function optionsFor(f) {
+  if (f.options) return f.options;
+  try {
+    if (f.source === "categories") {
+      return (await api("/material-categories").then(unwrap)).map((c) => [c.id, c.name]);
+    }
+    if (f.source === "accounts") {
+      return (await api("/finance/accounts?per_page=200").then(unwrap)).map((a) => [a.id, a.name]);
+    }
+    if (f.source === "drivers") {
+      return (await api("/parties?per_page=200").then(unwrap)).filter((p) => p.is_driver).map((p) => [p.id, p.name]);
+    }
+  } catch (err) {
+    toast(err.message);
+  }
+  return [];
+}
 
 let currentKind = null;
 
@@ -48,24 +91,19 @@ async function renderFields(kind) {
   const config = KINDS[kind];
   $("#entityTitle").textContent = config.title;
 
-  let categories = [];
-  if (config.fields.some((f) => f.source === "categories")) {
-    try {
-      categories = await api("/material-categories").then(unwrap);
-    } catch (err) {
-      toast(err.message);
-    }
-  }
+  const selects = await Promise.all(
+    config.fields.map((f) => (f.type === "select" ? optionsFor(f) : Promise.resolve(null))),
+  );
 
   $("#entityFields").innerHTML = config.fields
-    .map((f) => {
+    .map((f, i) => {
       if (f.type === "checks") {
         return `<div class="field wide"><span>نقش‌ها</span><div class="check-row">${f.options
           .map(([k, label]) => `<label><input type="checkbox" data-check="${esc(k)}"> ${esc(label)}</label>`)
           .join("")}</div></div>`;
       }
       if (f.type === "select") {
-        const options = categories.map((c) => `<option value="${esc(c.id)}">${esc(c.name)}</option>`).join("");
+        const options = selects[i].map(([value, label]) => `<option value="${esc(value)}">${esc(label)}</option>`).join("");
         return `<label class="field"><span>${esc(f.label)}${f.required ? " *" : ""}</span><select data-key="${esc(f.key)}" ${f.required ? "required" : ""}><option value="">انتخاب کنید</option>${options}</select></label>`;
       }
       const type = f.type === "number" ? "number" : "text";

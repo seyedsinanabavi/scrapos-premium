@@ -38,6 +38,12 @@ export function bindActions() {
       case "add-processing":
         openProcessingForm();
         break;
+      case "add-vehicle":
+        openEntityForm("vehicle");
+        break;
+      case "add-transaction":
+        openEntityForm("finance");
+        break;
       case "date-range":
         toast("بازه زمانی: ۳۰ روز گذشته");
         break;
